@@ -29,3 +29,10 @@ Route::prefix('users')->group(function () {
     Route::patch('/{user_id}', 'App\Http\Controllers\UserController@update');
     Route::delete('/{user_id}', 'App\Http\Controllers\UserController@destroy');
 });
+
+Route::prefix('calendars')->group(function () {
+    Route::get('/getCalendarsForUser', 'App\Http\Controllers\CalendarController@getCalendarsForUser');
+    Route::get('/getCalendar/{calendar_id}', 'App\Http\Controllers\CalendarController@getCalendar');
+    Route::patch('/{calendar_id}', 'App\Http\Controllers\CalendarController@update');
+    Route::delete('/{calendar_id}', 'App\Http\Controllers\CalendarController@destroy');
+});
