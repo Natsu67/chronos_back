@@ -27,7 +27,7 @@ class Controller extends BaseController
             return false;
         }
         $token = explode(" ", $request->header("Authorization"))[1];
-        $user = User::where("remember_token", $token)->first();
+        $user = User::where("token", $token)->first();
         if(!$user){
             return false;
         } else {
@@ -47,7 +47,7 @@ class Controller extends BaseController
             return null;
         }
         $token = explode(" ", $request->header("Authorization"))[1];
-        $user = User::where("remember_token", $token)->first();
+        $user = User::where("token", $token)->first();
         if(!$user){
             return null;
         } else {
