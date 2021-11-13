@@ -42,16 +42,13 @@ class AuthController extends Controller
             'user' => $user
         ]);
     }
+
     public function login(Request $request)
     {
-        $request->validate([
+        $credentials = $request->validate([
             'login'=> 'required|string',
             'password'=> 'required|string|min:4'
         ]);
-
-
-        $credentials = $request->only(['login', 'password']);
-
 
         if ($token = JWTAuth::attempt($credentials, ['exp' => \Carbon\Carbon::now()->addDays(7)->timestamp])) {
             $user = JWTAuth::user();
@@ -62,8 +59,6 @@ class AuthController extends Controller
                 'message' => 'Logged in',
                 'token' => $token,
                 'user' => $user,
-                'token_type' => 'Bearer',
-                'expires_in' => JWTAuth::factory()->getTTL() * 60,
             ]);
         } else {
             return response([

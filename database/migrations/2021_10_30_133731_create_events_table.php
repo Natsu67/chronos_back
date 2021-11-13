@@ -15,7 +15,7 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('owner_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('calendar_id');
             $table->string('title', 128);
             $table->string('description', 512)->nullable();
@@ -24,7 +24,7 @@ class CreateEventsTable extends Migration
             $table->string("color", 8);
             $table->timestamps();
 
-            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('calendar_id')->references('id')->on('calendars')->onDelete('cascade');
 
         });

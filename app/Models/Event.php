@@ -15,7 +15,7 @@ class Event extends Model
         'event_date',
         'category',
         'calendar_id',
-        'owner_id',
+        'user_id',
         'color'
     ];
 

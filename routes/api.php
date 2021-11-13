@@ -31,8 +31,15 @@ Route::prefix('users')->group(function () {
 });
 
 Route::prefix('calendars')->group(function () {
+    Route::post('/', 'App\Http\Controllers\CalendarController@createCalendar');
     Route::get('/getCalendarsForUser', 'App\Http\Controllers\CalendarController@getCalendarsForUser');
-    Route::get('/getCalendar/{calendar_id}', 'App\Http\Controllers\CalendarController@getCalendar');
+    Route::get('/getUsersForCalendar/{calendar_id}', 'App\Http\Controllers\CalendarController@getUsersForCalendar');
+    Route::get('/{calendar_id}', 'App\Http\Controllers\CalendarController@getCalendar');
     Route::patch('/{calendar_id}', 'App\Http\Controllers\CalendarController@update');
     Route::delete('/{calendar_id}', 'App\Http\Controllers\CalendarController@destroy');
+});
+
+Route::prefix('events')->group(function () {
+    Route::post('/{calendar_id}', 'App\Http\Controllers\EventController@createEventForCalendar');
+    Route::get('/{calendar_id}', 'App\Http\Controllers\EventController@getEventsForCalendar');
 });
