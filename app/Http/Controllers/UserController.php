@@ -22,7 +22,7 @@ class UserController extends Controller
     public function show($id)
     {
         //show a user
-        if (!User::find($id)){
+        if (!User::find($id)) {
             return response([
                 'message' => 'User does not exist'
             ], 404);
@@ -40,31 +40,28 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //update a user
-        if(!$this->check_auth($request)){
+        if (!$user_auth = $this->get_auth($request)) {
             return response([
                 'message' => 'You have no auth'
             ], 401);
         }
-        $user_auth =  $this->get_auth($request);
-        if($user_auth->id != $id){
+        if ($user_auth->id != $id) {
             return response([
                 'message' => 'You have no access'
             ], 403);
         } else {
-            if(!$user  = User::find($id)){
+            if (!$user  = User::find($id)) {
                 return response([
                     'message' => 'User does not exist'
                 ], 404);
             }
 
             $validated = $request->validate([
-                'full_name'=> 'string',
-                'email'=> 'string',
-                'region' => 'string'
+                'full_name' => 'string',
+                'email' => 'string',
             ]);
 
-            if($user_auth->id == $id){
+            if ($user_auth->id == $id) {
                 $user->update($validated);
                 return $user;
             }
@@ -80,11 +77,11 @@ class UserController extends Controller
     public function destroy(Request $request, $id)
     {
         //destroy post
-        if(!$this->check_auth($request)){
+        if (!$this->check_auth($request)) {
             return response([
                 'message' => 'You have no auth'
             ], 401);
-        } else if($this->get_auth($request)->id != $id){
+        } else if ($this->get_auth($request)->id != $id) {
             return response([
                 'message' => 'You have no access'
             ], 403);

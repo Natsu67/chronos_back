@@ -26,7 +26,7 @@ Route::prefix('auth')->group(function () {
 Route::prefix('users')->group(function () {
     Route::get('', 'App\Http\Controllers\UserController@index');
     Route::get('/{user_id}', 'App\Http\Controllers\UserController@show');
-    Route::patch('/{user_id}', 'App\Http\Controllers\UserController@update');
+    Route::post('/{user_id}', 'App\Http\Controllers\UserController@update');
     Route::delete('/{user_id}', 'App\Http\Controllers\UserController@destroy');
 });
 
@@ -40,6 +40,8 @@ Route::prefix('calendars')->group(function () {
 });
 
 Route::prefix('events')->group(function () {
-    Route::post('/{calendar_id}', 'App\Http\Controllers\EventController@createEventForCalendar');
+    Route::post('/get/{calendar_id}', 'App\Http\Controllers\EventController@createEventForCalendar');
+    Route::get('/one/{event_id}', 'App\Http\Controllers\EventController@getEventById');
+    Route::delete('/one/{event_id}', 'App\Http\Controllers\EventController@delEventById');
     Route::get('/{calendar_id}', 'App\Http\Controllers\EventController@getEventsForCalendar');
 });

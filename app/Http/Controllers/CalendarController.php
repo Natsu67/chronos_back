@@ -66,11 +66,11 @@ class CalendarController extends Controller
      */
     public function getCalendarsForUser(Request $request)
     {
-        if(!$this->check_auth($request)) {
+        if(!$user = $this->get_auth($request)) {
             return response("You have no auth", 403);
         }
 
-        $calendars = \DB::table("user_calendars")->where("user_id", $this->get_auth($request)->id)->get();
+        $calendars = \DB::table("user_calendars")->where("user_id", $user->id)->get();
 
         foreach($calendars as $calendar) {
             $calendar->calendar_data = Calendar::find($calendar->calendar_id);
@@ -86,7 +86,6 @@ class CalendarController extends Controller
      */
     public function getCalendar(Request $request, $id)
     {
-
         if(!$calendar = Calendar::find($id))
             return response("Calendar not found", 404);
 

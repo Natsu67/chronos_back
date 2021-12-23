@@ -29,7 +29,7 @@ class AuthController extends Controller
         $calendar = Calendar::create([
             'title' => 'Main calendar',
             'user_id' => $user->id,
-            'main' => '1',
+            'main' => true,
         ]);
 
         User_calendar::create([
@@ -50,7 +50,7 @@ class AuthController extends Controller
             'password'=> 'required|string|min:4'
         ]);
 
-        if ($token = JWTAuth::attempt($credentials, ['exp' => \Carbon\Carbon::now()->addDays(7)->timestamp])) {
+        if ($token = JWTAuth::attempt($credentials)) {
             $user = JWTAuth::user();
             $user->token = $token;
             $user->save();
@@ -71,12 +71,13 @@ class AuthController extends Controller
     {
         try {
             //check if log in
-            $user = $this->get_auth($request);
+            $user = auth()->user();
             if($user){
                 JWTAuth::invalidate(JWTAuth::getToken());
+                $user = User::find($user->id);
                 $user->token = NULL;
                 $user->save();
-                return response(['message' => 'Successfully logged out']);
+                return response(['message' => 'Successfully logged out'], 200);
             }
         } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
             return response(['error' => $e->getMessage()], 401);

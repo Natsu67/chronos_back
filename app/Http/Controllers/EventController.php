@@ -24,9 +24,9 @@ class EventController extends Controller
         $validated = $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
-            'event_date' => 'required|date|date_format:Y-m-d',
+            'event_date' => 'required',
             'category' => 'required|in:arrangement,reminder,task',
-            'color' => 'required|string',
+            'color' => 'required',
         ]);
         $user_id = $this->get_auth($request)->id;
 
@@ -62,6 +62,26 @@ class EventController extends Controller
         }
 
         return response($calendar->users, 403);
+
+    }
+
+    public function getEventById(Request $request, $id)
+    {
+        if(!$this->check_auth($request)){
+            return response("You have no auth", 404);
+        }
+
+        return \DB::table("events")->where("id", $id)->get();;
+
+    }
+
+    public function delEventById(Request $request, $id)
+    {
+        if(!$this->check_auth($request)){
+            return response("You have no auth", 404);
+        }
+
+        return \DB::table("events")->where("id", $id)->delete();;
 
     }
 }

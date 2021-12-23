@@ -6,52 +6,41 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
-class CalendarsSeeder extends Seeder
+class User_calendarsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
      * @return void
      */
     public function run()
     {
-        \DB::table('calendars')->insert([
-            'title' => "Work Calendar",
-            'description' => Str::random(30),
+        \DB::table('user_calendars')->insert([
             'user_id' => 1,
-            "main" => true,
+            'calendar_id' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
-        \DB::table('calendars')->insert([
-            'title' => "Holiday Calendar",
-            'description' => Str::random(30),
+        \DB::table('user_calendars')->insert([
             'user_id' => 1,
-            "main" => false,
+            'calendar_id' => 2,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
-        \DB::table('calendars')->insert([
-            'title' => "user2_calendar_main",
-            'description' => Str::random(30),
+        \DB::table('user_calendars')->insert([
             'user_id' => 2,
-            "main" => true,
+            'calendar_id' => 3,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
-        \DB::table('calendars')->insert([
-            'title' => "user3_calendar_not_main",
-            'description' => Str::random(30),
+        \DB::table('user_calendars')->insert([
             'user_id' => 3,
-            "main" => false,
+            'calendar_id' => 4,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
-        \DB::table('calendars')->insert([
-            'title' => "user3_calendar_main",
-            'description' => Str::random(30),
+        \DB::table('user_calendars')->insert([
             'user_id' => 3,
-            "main" => true,
+            'calendar_id' => 5,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
